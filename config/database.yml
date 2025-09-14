@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: qna
+  password: Qwerty123
+  host: localhost
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: tn_qna_development
+
+test:
+  <<: *default
+  database: tn_qna_test
+
+production:
+  <<: *default
+  database: tn_qna_production
