@@ -29,6 +29,8 @@ gem 'tilt', '>= 2.2'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem "slim-rails"
+gem "devise"
+gem "importmap-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -59,6 +61,8 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem "shoulda-matchers", '~> 6.0'
+  gem "launchy"
+  gem "rails-controller-testing"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
