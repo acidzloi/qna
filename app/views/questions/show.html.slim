@@ -1,8 +1,14 @@
-h1= question.title
-p= question.body
+.question id="question"
+  h1= question.title
+  p= question.body
+  .question-errors
 
 - if current_user&.author?(question)
-  = link_to 'Delete question', question_path(question), data: { "turbo-method": :delete }
+  p = link_to "Delete question", question_path(question), method: :delete
+  p = link_to 'Edit question', '#', class: 'edit-question-link'
+  p = render "form"
 
 = render 'answers/form'
-= render question.answers
+
+.answers
+  = render question.answers.sort_by_best

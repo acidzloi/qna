@@ -1,7 +1,16 @@
-= form_with model: question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
-  = f.submit 'Ask'
+= form_with model: question, class: 'hidden',
+                               html: { id: "edit-question-form" },
+                               data: {turbo:false},
+                               local: false do |f|
+  .question-edit-errors
+    = render 'shared/errors', resource: question
+    
+  p
+    = f.label :title , 'Your title'
+    = f.text_field :title
+  p 
+    = f.label :body, 'Your question'
+    = f.text_area :body
+  p
+    = f.submit 'Save'
   

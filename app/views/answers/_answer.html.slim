@@ -1,5 +1,32 @@
-p= answer.body
+.answer class="answer-#{answer.id}"
+  p= answer.body
 
-- if answer.persisted?
-  - if current_user&.author?(answer)
-    = link_to 'Delete answer', answer_path(answer), data: { "turbo-method": :delete }
+  - if answer.persisted?
+    - if current_user&.author?(answer)
+      = link_to("Delete answer", answer_path(answer),
+                method: :delete,
+                class: 'delete-answer-link',
+                remote: true,
+                data: { answer_id: answer.id })
+
+      p = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+    - if current_user&.author?(answer.question) && !answer.best?
+      = link_to 'Best',
+                best_answer_path(answer),
+                class: 'best-answer-link',
+                remote: true,
+                method: :patch,
+                data: { answer_id: answer.id }
+
+    = form_with model: answer,
+                class: 'hidden',
+                html: { id: "edit-answer-#{answer.id}" },
+                data: {turbo:false}, local: false do |f|
+    
+      .answer-edit-errors
+        = render 'shared/errors', resource: answer
+    
+      = f.label :body, 'Your answer'
+      = f.text_area :body
+      = f.submit 'Save'
