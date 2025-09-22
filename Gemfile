@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 7.2'
+gem 'rails', '~> 7.2.2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 gem 'pg', '~> 1.2'
@@ -31,6 +31,7 @@ gem 'tilt', '>= 2.2'
 gem "slim-rails"
 gem "devise"
 gem "importmap-rails"
+gem "jquery-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -59,7 +60,6 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
   gem "shoulda-matchers", '~> 6.0'
   gem "launchy"
   gem "rails-controller-testing"

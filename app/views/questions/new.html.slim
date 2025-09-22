@@ -1,2 +1,11 @@
-= render 'shared/errors', resource: question
-= render 'form'
+= form_with model: question, data: { turbo: false } do |f|
+  = render "shared/errors", resource: question
+ 
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+  p
+    = f.submit "Ask"
