@@ -39,10 +39,23 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
+  config.include AttachFileHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include AttachFileHelpers, type: :feature
 
-  Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.register_driver :selenium_chrome_headless_custom do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new') # новый headless режим
+  options.add_argument('--disable-gpu')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument("--user-data-dir=/tmp/chrome_test_#{Time.now.to_i}") # уникальный профиль
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :selenium_chrome_headless_custom
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = Rails.root.join('spec/fixtures')
@@ -75,6 +88,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  config.after(:all) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
 end
 
 Shoulda::Matchers.configure do |config|

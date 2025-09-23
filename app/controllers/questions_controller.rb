@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     if current_user.author?(question)
       question.update(question_params)
     else
-      render :edit
+      render :show
     end
   end
 

@@ -32,6 +32,22 @@ feature 'User can edit his answer', %q(
       end
     end
 
+    scenario 'edits his answer with attach files', js: true do
+      sign_in(author)
+      visit question_path(question)
+      click_on 'Edit answer'
+
+      within '.answers' do
+        fill_in 'Your answer', with: 'edited answer'
+        attach_file 'Answers files', [ "#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}" ]
+        click_on 'Save'
+
+        expect(page).to_not have_selector 'file'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
     scenario 'edits his answer with errors', js: true do
       sign_in(author)
       visit question_path(question)

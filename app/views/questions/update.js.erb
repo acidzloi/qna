@@ -1,5 +1,5 @@
 $('.question-edit-errors').html('<%= j render 'shared/errors', resource: question %>');
 
 <% if !question.errors.present? %>
-  $(".question").load(location.href + " #question");
+  $(".question").html('<%= j render question %>');
 <% end %>
