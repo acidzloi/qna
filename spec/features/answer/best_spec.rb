@@ -11,7 +11,6 @@ feature 'Best answer' do
     visit question_path(question)
 
     expect(page).to_not have_link 'Best'
-  end
 
   scenario 'Authenticated user can not set best answer' do
     sign_in(user)

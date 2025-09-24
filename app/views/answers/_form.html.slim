@@ -4,6 +4,11 @@
   .answer-errors
     = render "shared/errors", resource: @answer
 
-  = f.label :body
-  = f.text_area :body
-  = f.submit 'Answer'
+  p
+    = f.label :body
+    = f.text_area :body
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true
+  p
+    = f.submit "Answer"
