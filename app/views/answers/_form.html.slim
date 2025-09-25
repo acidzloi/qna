@@ -1,14 +1,22 @@
-= form_with model: [question, @answer], class: 'new-answer',
+.answers-form
+  = form_with model: [question, @answer], class: 'new-answer',
                                           data: { turbo: false },
                                           local: false do |f|
-  .answer-errors
-    = render "shared/errors", resource: @answer
+    .answer-errors
+      = render "shared/errors", resource: @answer
 
-  p
-    = f.label :body
-    = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true
-  p
+    p
+      = f.label :body
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
+
+    p Links:
+    p
+      = f.fields_for :links do |l|
+        = render 'link_fields', f: l
+      .links
+        = link_to_add_association 'add link', f, :links
+
     = f.submit "Answer"

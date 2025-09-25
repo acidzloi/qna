@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.include AttachFileHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include WaitAjaxRequest, type: :feature
   config.include AttachFileHelpers, type: :feature
 
 Capybara.register_driver :selenium_chrome_headless_custom do |app|

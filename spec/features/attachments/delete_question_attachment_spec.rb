@@ -5,11 +5,11 @@ feature 'User can remove his question attachments' do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  describe 'Authenticated user', js: true do
-    before do
-      attach_file_to(question)
-    end
+  before do
+    attach_file_to(question)
+  end
 
+  describe 'Authenticated user', js: true do
     scenario 'author of the question delete the attachment' do
       sign_in(author)
       visit question_path(question)

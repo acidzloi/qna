@@ -7,10 +7,14 @@ class QuestionsController < ApplicationController
   end
 
   def show 
-    @answer = Answer.new  
+    @answer = Answer.new
+    @answer.links.new
   end
 
-  def new; end
+  def new
+    question.links.new
+    question.badge ||= Badge.new
+  end
 
   def edit; end
 
@@ -48,12 +52,12 @@ class QuestionsController < ApplicationController
   end
 
   def question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+    @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new
   end
 
   helper_method :question
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [], links_attributes: [ :name, :url ], badge_attributes: [ :title, :image ])
   end
 end

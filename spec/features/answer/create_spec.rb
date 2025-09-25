@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-feature 'User can create answer', %q(
-  As an authenticated user
-  being on the question page
-  I'd like to create the answer to the question
-) do
+feature 'User can create answer' do
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
@@ -18,7 +14,7 @@ feature 'User can create answer', %q(
       fill_in 'Body', with: 'first answer'
       click_on 'Answer'
 
-      expect(page).to have_content 'Answer successfully created.'
+      expect(page).to have_content 'Your answer successfully created.'
       expect(page).to have_content 'first answer'
     end
 

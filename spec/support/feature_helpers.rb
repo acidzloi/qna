@@ -6,3 +6,10 @@ module FeatureHelpers
     click_on 'Log in'
   end
 end
+
+def add_image(badge)
+  badge.image.attach(
+    io: File.open(Rails.root.join('public/icon.png').to_s),
+    filename: 'icon.png'
+  )
+end

@@ -14,6 +14,11 @@
   p
     = f.label :files, 'Question files'
     = f.file_field :files, multiple: true
+  p Links:
+  p
+    = f.fields_for :links do |l|
+    .links
+      = link_to_add_association 'add link', f, :links
   p
     = f.submit 'Save'
   
