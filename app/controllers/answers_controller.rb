@@ -4,20 +4,22 @@ class AnswersController < ApplicationController
   def create
     @answer = question.answers.create(answer_params)
     @answer.user = current_user
-
-    flash[:notice] = "Your answer successfully created." if @answer.save
+    
+    if @answer.save
+      flash[:notice] = "Your answer successfully created."
+      redirect_to question_path(question)
+    else
+      render 'questions/show'
+    end
   end
 
   def destroy
     if current_user.author?(answer)
       answer.destroy
-      flash[:notice] = "Answer successfully deleted."
+      redirect_to answer.question, notice: 'Your answer successfully deleted.'
     else
-      flash[:notice] = "Only author can delete answer."
-      redirect_to answer.question
+      redirect_to answer.question, notice: 'You are not authorized to delete this answer.'
     end
-
-    redirect_to @answer.question
   end
 
   
@@ -33,6 +35,7 @@ class AnswersController < ApplicationController
   def best
     if current_user
       answer.best!
+      answer.user.add_badge!(answer.question.badge)
     else
       redirect_to answer.question
     end
@@ -51,6 +54,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [], links_attributes: [ :name, :url ])
   end
 end

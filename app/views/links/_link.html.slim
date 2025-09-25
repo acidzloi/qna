@@ -1,0 +1,12 @@
+.link class = "link-#{link.id}"
+  - if link.gist?
+    li = link.gist
+  - else
+    li = link_to link.name, link.url, target: :blank
+
+  - if current_user&.author?(resource)
+    = link_to 'Delete', link_path(link),
+          class: 'delete-link-link',
+          remote: true,
+          method: :delete
+          

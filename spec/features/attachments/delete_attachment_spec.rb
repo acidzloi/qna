@@ -6,11 +6,11 @@ feature 'User can remove his answer attachments' do
   given(:question) { create(:question, user: author) }
   given(:answer) { create(:answer, question: question, user: author) }
 
-  describe 'Authenticated user', js: true do
-    before do
-      attach_file_to(answer)
-    end
+  before do
+    attach_file_to(answer)
+  end
 
+  describe 'Authenticated user', js: true do
     scenario 'author of the answer removes the attachment' do
       sign_in(author)
       visit question_path(question)
