@@ -16,13 +16,25 @@ feature 'User can edit his answer', %q(
     expect(page).to_not have_link 'Edit'
   end
 
+  scenario "User can not edit other user's answers" do
+    sign_in(user)
+    visit question_path(question)
+
+    within '#answer-#{answer.id}' do
+      expect(page).to_not have_link 'Edit answer'
+    end
+  end
+
   describe 'Authenticated user' do
-    scenario 'edits his answer', js: true do
+    before do
       sign_in(author)
       visit question_path(question)
-      click_on 'Edit answer'
 
-      within '.answers' do
+      click_on 'Edit answer'
+    end
+
+    scenario 'edits his answer', js: true do
+      within '.answer' do
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
 
@@ -33,13 +45,10 @@ feature 'User can edit his answer', %q(
     end
 
     scenario 'edits his answer with attach files', js: true do
-      sign_in(author)
-      visit question_path(question)
-      click_on 'Edit answer'
-
-      within '.answers' do
+      within '.answer' do
         fill_in 'Your answer', with: 'edited answer'
         attach_file 'Answers files', [ "#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}" ]
+        save_page
         click_on 'Save'
 
         expect(page).to_not have_selector 'file'
@@ -49,10 +58,6 @@ feature 'User can edit his answer', %q(
     end
 
     scenario 'edits his answer with errors', js: true do
-      sign_in(author)
-      visit question_path(question)
-      click_on 'Edit answer'
-
       within '.answer' do
         fill_in 'Your answer', with: ''
         click_on 'Save'
@@ -66,11 +71,16 @@ feature 'User can edit his answer', %q(
     end
 
     scenario "tries to edit other user's answers" do
-      sign_in(user)
-      visit question_path(question)
+      within '.answer' do
+        click_on 'add link'
 
-      within '.answers' do
-        expect(page).to_not have_link 'Edit answer'
+        fill_in 'Link name', with: 'Test'
+        fill_in 'Url', with: 'http://test.local'
+
+        click_on 'Save'
+
+        expect(page).to have_link 'Test', href: 'http://test.local'
+        expect(page).to_not have_selector 'textfield'
       end
     end
   end

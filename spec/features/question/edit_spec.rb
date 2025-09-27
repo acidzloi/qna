@@ -15,12 +15,23 @@ feature 'User can edit his question', %q(
     expect(page).to_not have_link 'Edit'
   end
 
-  describe 'Authenticated user' do
-    scenario 'edits his question', js: true do
-      sign_in(author)
+  scenario "User can not edit question" do
+    sign_in(user)
+    visit question_path(question)
+
+    within '.question' do
+      expect(page).to_not have_link 'Edit'
+    end
+  end
+
+  describe 'Author' do
+    before { sign_in(author) }
+    before do
       visit question_path(question)
       click_on 'Edit question'
+    end
 
+    scenario 'edits his question', js: true do
       within '.question' do
         fill_in 'Your title', with: 'edited title'
         fill_in 'Your question', with: 'edited question'
@@ -36,10 +47,6 @@ feature 'User can edit his question', %q(
     end
 
     scenario 'edits his question with errors', js: true do
-      sign_in(author)
-      visit question_path(question)
-      click_on 'Edit question'
-
       within '.question' do
         fill_in 'Your title', with: ''
         fill_in 'Your question', with: ''
@@ -56,9 +63,20 @@ feature 'User can edit his question', %q(
     end
 
     scenario 'edits his question with attach files', js: true do
-      sign_in(author)
-      visit question_path(question)
-      click_on 'Edit question'
+      within '.question' do
+        fill_in 'Your title', with: 'edited title'
+        fill_in 'Your question', with: 'edited question'
+        attach_file 'Question files', [ "#{Rails.root.join('spec/rails_helper.rb')}", "#{Rails.root.join('spec/spec_helper.rb')}" ]
+
+        click_on 'Save'
+
+        expect(page).to_not have_selector 'file'
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
+
+    scenario 'edits his question', js: true do
 
       within '.question' do
         fill_in 'Your title', with: 'edited title'
@@ -74,11 +92,16 @@ feature 'User can edit his question', %q(
     end
 
     scenario "tries to edit other user's answers" do
-      sign_in(user)
-      visit question_path(question)
-
       within '.question' do
-        expect(page).to_not have_link 'Edit'
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'Test'
+        fill_in 'Url', with: 'http://test.local'
+
+        click_on 'Save'
+
+        expect(page).to have_link 'Test', href: 'http://test.local'
+        expect(page).to_not have_selector 'textfield'
       end
     end
   end

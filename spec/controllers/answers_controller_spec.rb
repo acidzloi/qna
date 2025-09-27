@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
+  let!(:badge) { create(:badge, question: question) }
   let(:answer) { create(:answer, question: question, user: user) }
   before { login(user) }
 
@@ -61,6 +62,17 @@ RSpec.describe AnswersController, type: :controller do
       it 'renders update view' do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid_answer) }, format: :js
         expect(response).to render_template :update
+      end
+    end
+
+    context 'best answer' do
+      it 'set best and add badge to user' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+        badge.reload
+
+        expect(answer.best).to eq true
+        expect(answer.user).to eq badge.user
       end
     end
   end

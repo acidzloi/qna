@@ -4,15 +4,21 @@ feature 'Best answer' do
   given!(:author) { create(:user) }
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: author) }
+  given!(:badge) { create(:badge, question: question) }
   given!(:first_answer) { create(:answer, question: question, user: author) }
   given!(:second_answer) { create(:answer, question: question, user: author) }
 
-  scenario 'Unauthenticated user can not set best answer' do
+  before do
+    add_image(badge)
+  end
+
+  scenario 'Non-logged in user can not set best answer' do
     visit question_path(question)
 
     expect(page).to_not have_link 'Best'
+  end
 
-  scenario 'Authenticated user can not set best answer' do
+  scenario 'User can not set best answer' do
     sign_in(user)
     visit question_path(question)
 
