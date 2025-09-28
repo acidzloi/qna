@@ -44,6 +44,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include WaitAjaxRequest, type: :feature
   config.include AttachFileHelpers, type: :feature
+  config.include VoteHelpers, type: :model
 
 Capybara.register_driver :selenium_chrome_headless_custom do |app|
   options = ::Selenium::WebDriver::Chrome::Options.new

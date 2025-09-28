@@ -6,10 +6,12 @@ RSpec.describe User, type: :model do
   let(:question) { create(:question, user: author) }
   let(:badge) { create(:badge, question: question) }
   let(:answer) { create(:answer, question: question, user: author) }
+  let!(:vote) { create(:vote, user: user, voteble: question) }
 
   it { should have_many(:questions).dependent(:destroy) }
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:badges).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -37,6 +39,12 @@ RSpec.describe User, type: :model do
 
     it 'adds badge to user' do
       expect { subject }.to change {  user.badges.count }.from(0).to(1)
+    end
+  end
+
+    describe '#voted?' do
+    it 'user voted?' do
+      expect(user.voted?(question)).to be true
     end
   end
 end

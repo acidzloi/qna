@@ -1,17 +1,22 @@
 h1 = question.title
 p  = question.body
 
+- unless current_user&.author?(question)
+  .vote
+    = render 'shared/vote', resource: question
+
+- if question.badge.present?
+  .badge
+    p Badge:
+    = image_tag question.badge.image, title: question.badge.title, size: "50x50"
+    p = question.badge.title
+
 - if question.files.attached?
   .attachment-files
     - question.files.each do |file|
-      .attachment-file class="attachment-file-#{file.id}"
-        p = link_to file.filename.to_s, url_for(file)
-        - if current_user&.author?(question)
-          = link_to 'Delete attachment',
-                    attachment_path(file),
-                    class: 'delete-attachment-file-link',
-                    remote: true,
-                    method: :delete
+      p Files:
+      ul
+        = render 'attachments/attachment', resource: question
 
 .question-errors
   

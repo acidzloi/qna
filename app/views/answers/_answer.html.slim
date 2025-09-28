@@ -2,6 +2,10 @@
   .answer id="answer-#{answer.id}"
     p = answer.body
 
+    - unless current_user&.author?(answer)
+      .vote
+        = render 'shared/vote', resource: answer
+        
     - if answer.files.attached?
       .attachment-files
         p Files:
