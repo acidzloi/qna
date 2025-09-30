@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature 'User can create answer' do
   given(:user) { create(:user) }
+  given(:second_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
   describe 'Authenticated user' do
@@ -11,7 +12,7 @@ feature 'User can create answer' do
     end
 
     scenario 'create answer' do
-      fill_in 'Body', with: 'first answer'
+      fill_in 'Answer', with: 'first answer'
       click_on 'Answer'
 
       expect(page).to have_content 'Your answer successfully created.'
@@ -31,6 +32,41 @@ feature 'User can create answer' do
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
+    end
+
+    context 'mulitple sessions', js: true do
+      given(:url) { 'https://test.local' }
+
+      scenario "answer appears on another user's page" do
+        Capybara.using_session('second_user') do
+          sign_in(second_user)
+          visit question_path(question)
+        end
+
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit question_path(question)
+
+          fill_in 'Answer', with: 'first answer'
+
+          attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+
+          fill_in 'Link name', with: 'Test'
+          fill_in 'Url', with: url
+
+          click_on 'Answer'
+
+          expect(page).to have_content 'first answer'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'Test', href: url
+        end
+
+        Capybara.using_session('second_user') do
+          expect(page).to have_content 'first answer'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'Test', href: url
+        end
+      end
     end
   end
 

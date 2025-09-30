@@ -133,4 +133,11 @@ RSpec.describe QuestionsController, type: :controller do
       let(:voteble) { create(:question, user: author) }
     end
   end
+
+  describe 'Commented' do
+    it_behaves_like Commented do
+      let(:author) { create(:user) }
+      let(:commenteble) { create(:question, user: author) }
+    end
+  end
 end

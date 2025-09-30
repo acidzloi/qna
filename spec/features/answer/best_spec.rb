@@ -38,9 +38,20 @@ feature 'Best answer' do
     end
 
     scenario 'best answer link available for not best answer' do
+      # Добавляем отладку
+      puts "First answer ID: #{first_answer.id}"
+      puts "Second answer ID: #{second_answer.id}"
+      puts page.html
+      
       within(".answer-#{first_answer.id}") do
         click_on 'Best'
       end
+
+      # Добавляем паузу для обработки AJAX
+      sleep 1
+      
+      puts "After clicking Best:"
+      puts page.html
 
       within(".answer-#{second_answer.id}") do
         expect(page).to have_link 'Best'

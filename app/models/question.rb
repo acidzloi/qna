@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include Voteble
+  include Commenteble
   
   has_many :answers, dependent: :destroy
   belongs_to :user

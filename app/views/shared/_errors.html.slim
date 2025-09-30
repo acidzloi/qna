@@ -1,5 +1,6 @@
-if resource&.errors.present?
-b = "#{resource.errors.count} error(s) detected: "
-ul
-  -resource.errors.full_messages.each do |message|
-    li= message
+- target = local_assigns[:object] || resource
+- if target&.errors.present?
+  - b = "#{target.errors.count} error(s) detected:"
+  ul
+    - target.errors.full_messages.each do |message|
+      li = message

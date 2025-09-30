@@ -26,6 +26,10 @@ gem "aws-sdk"
 gem "cocoon"
 gem "octokit"
 
+gem "coffee-rails"
+gem "skim"
+gem "gon"
+
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
 

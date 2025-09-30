@@ -1,0 +1,6 @@
+$('.answer-<%=@comment.commenteble_id%> .comment-errors').html('<%= j render 'shared/errors', resource: @comment %>');
+
+<% if @comment.persisted? %>
+  $('.answer-<%=@comment.commenteble_id%> .comments').append('<%= j render @comment %>');
+  $('.answer-<%=@comment.commenteble_id%> .comment-form #comment_body').val('');
+<% end %>

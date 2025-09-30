@@ -10,7 +10,7 @@ feature 'User can add links to answer' do
 
     visit question_path(question)
 
-    fill_in 'Body', with: 'My answer'
+    fill_in 'Answer', with: 'My answer'
 
     fill_in 'Link name', with: 'Url'
     fill_in 'Url', with: url

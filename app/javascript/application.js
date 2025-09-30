@@ -5,3 +5,4 @@ import "controllers"
 
 Rails.start()
 ActiveStorage.start()
+import "./channels"
