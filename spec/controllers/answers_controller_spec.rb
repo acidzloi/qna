@@ -76,4 +76,13 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'Voted' do
+    before { logout(user) }
+
+    it_behaves_like Voted do
+      let(:author) { create(:user) }
+      let(:voteble) { create(:answer, question: question, user: author) }
+    end
+  end
 end
