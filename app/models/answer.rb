@@ -1,5 +1,7 @@
 class Answer < ApplicationRecord
   include Voteble
+  include Commenteble
+  include Rails.application.routes.url_helpers
   
   belongs_to :question
   belongs_to :user
@@ -19,5 +21,11 @@ class Answer < ApplicationRecord
       question.answers.best.update!(best: false)
       update!(best: true)
     end
+  end
+
+  def files_info
+    files.map { |f| { id: f.id,
+                      name: f.filename.to_s,
+                      url: rails_blob_path(f, only_path: true) } }
   end
 end

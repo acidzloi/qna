@@ -1,0 +1,3 @@
+$('.comment-errors').html('');
+$('#comment_body').val('');
+$('.comments').html('<%= j render 'comments/comments', resource: @commentable %>');

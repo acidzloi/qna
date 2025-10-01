@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_27_175423) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_30_091203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_27_175423) do
     t.index ["user_id"], name: "index_badges_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text "body", null: false
+    t.string "commenteble_type", null: false
+    t.bigint "commenteble_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commenteble_type", "commenteble_id"], name: "index_comments_on_commenteble"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "links", force: :cascade do |t|
     t.string "name", null: false
     t.string "url", null: false
@@ -111,6 +122,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_27_175423) do
   add_foreign_key "answers", "users"
   add_foreign_key "badges", "questions"
   add_foreign_key "badges", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "votes", "users"
 end

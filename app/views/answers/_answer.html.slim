@@ -1,5 +1,5 @@
 - if answer.persisted?
-  .answer id="answer-#{answer.id}"
+  .answer id="answer-#{answer.id}" class="answer-#{answer.id}"
     p = answer.body
 
     - unless current_user&.author?(answer)
@@ -35,6 +35,11 @@
                 remote: true,
                 method: :patch,
                 data: { answer_id: answer.id }
+
+    .comments
+      p Comments:
+      p 
+        = render  'comments/comments', resource: answer
 
     = form_with model: answer,
                 class: 'hidden',

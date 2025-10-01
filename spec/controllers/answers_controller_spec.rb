@@ -85,4 +85,13 @@ RSpec.describe AnswersController, type: :controller do
       let(:voteble) { create(:answer, question: question, user: author) }
     end
   end
+
+  describe 'Commented' do
+    before { logout(user) }
+
+    it_behaves_like Commented do
+      let(:author) { create(:user) }
+      let(:commenteble) { create(:answer, question: question, user: author) }
+    end
+  end
 end

@@ -1,5 +1,6 @@
 - resource.files.each do |file|
   .attachment-file class="attachment-file-#{file.id}"
+    li
     p = link_to file.filename.to_s, url_for(file)
     - if current_user&.author?(resource)
       = link_to 'Delete attachment',
