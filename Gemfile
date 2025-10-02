@@ -29,6 +29,10 @@ gem "octokit"
 gem "coffee-rails"
 gem "skim"
 gem "gon"
+gem "omniauth"
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-vkontakte"
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
@@ -70,6 +74,8 @@ group :test do
   gem "shoulda-matchers", '~> 6.0'
   gem "launchy"
   gem "rails-controller-testing"
+  gem "capybara-email"
+  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -2,6 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'capybara/email/rspec'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'rails-controller-testing'
@@ -58,6 +59,9 @@ Capybara.register_driver :selenium_chrome_headless_custom do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
+config.include OmniauthHelpers
+config.include OmniauthEnvHelpers
+
 Capybara.javascript_driver = :selenium_chrome_headless_custom
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -67,6 +71,7 @@ Capybara.javascript_driver = :selenium_chrome_headless_custom
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  OmniAuth.config.test_mode = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false

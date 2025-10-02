@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  root "questions#index"
+  devise_for :users, controllers: { omniauth_callbacks: "oauth_callbacks" }
+
+  root to: "questions#index"
+
+  devise_scope :user do
+    post "/send_email" => "oauth_callbacks#send_email"
+  end
 
   concern :voteble do
     member do
@@ -7,8 +13,6 @@ Rails.application.routes.draw do
       delete :recall
     end
   end
-
-  devise_for :users
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

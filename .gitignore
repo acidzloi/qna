@@ -33,3 +33,10 @@
 /config/master.key
 
 /config/database.key
+
+# Ignore .credentials.yml.enc
+/config/credentials.yml.enc
+
+/config/credentials/development.key
+
+/config/credentials/test.key
