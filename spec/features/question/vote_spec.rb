@@ -39,6 +39,7 @@ feature 'User can vote for a question' do
           click_on '+'
           expect(page).to_not have_link '+'
           expect(page).to_not have_link '-'
+          expect(page).to have_link 'recall'
         end
       end
 
@@ -60,9 +61,7 @@ feature 'User can vote for a question' do
 
     scenario 'can not vote' do
       within ".vote-#{question.class}-#{question.id}" do
-        click_on '+'
-
-        expect(page).to have_content 'You need to sign in or sign up before continuing.'
+        expect(page).to_not have_link '+'
       end
     end
   end

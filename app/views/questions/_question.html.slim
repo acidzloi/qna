@@ -1,9 +1,8 @@
 h1 = question.title
 p  = question.body
 
-- unless current_user&.author?(question)
-  .vote
-    = render 'shared/vote', resource: question
+.vote
+  = render 'shared/vote', resource: question
 
 - if question.badge.present?
   .badge
@@ -20,10 +19,13 @@ p  = question.body
 
 .question-errors
   
-- if current_user&.author?(question)
+- if can?(:update, question)
   p = link_to "Delete question", question_path(question), method: :delete
   p = link_to 'Edit question', '#', class: 'edit-question-link'
   p = render "form"
+
+- if can?(:destroy, question)
+  p = link_to "Delete question", question_path(question), method: :delete
 
 .comments
   p Comments:

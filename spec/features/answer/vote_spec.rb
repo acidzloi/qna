@@ -61,9 +61,7 @@ feature 'User can vote for a answer' do
 
     scenario 'can not vote' do
       within ".vote-#{answer.class}-#{answer.id}" do
-        click_on '+'
-
-        expect(page).to have_content 'You need to sign in or sign up before continuing.'
+        expect(page).to_not have_link '+'
       end
     end
   end

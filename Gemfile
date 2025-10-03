@@ -33,6 +33,7 @@ gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-vkontakte"
+gem "cancancan"
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
