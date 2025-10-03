@@ -1,0 +1,10 @@
+= form_with url: send_email_path, method: :post do |form|
+  p 
+   b Enter your email
+  p
+    = form.label :email
+  p
+    = form.email_field  :email
+  p  
+    = form.submit 'Save'
+    

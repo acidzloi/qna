@@ -6,12 +6,16 @@ feature 'User can register' do
   background { visit new_user_registration_path }
 
   scenario 'User can register with valid params' do
-    fill_in 'Email', with: 'user@test.loc'
+    fill_in 'Email', with: 'new_user@test.local'
     fill_in 'Password', with: 'password'
     fill_in 'Password confirmation', with: 'password'
 
     click_button 'Sign up'
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    open_email('new_user@test.local')
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+    expect(current_path).to eq new_user_session_path
   end
 
   scenario 'User can not register with invalid params' do
