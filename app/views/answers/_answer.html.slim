@@ -2,9 +2,8 @@
   .answer id="answer-#{answer.id}" class="answer-#{answer.id}"
     p = answer.body
 
-    - unless current_user&.author?(answer)
-      .vote
-        = render 'shared/vote', resource: answer
+    .vote
+      = render 'shared/vote', resource: answer
         
     - if answer.files.attached?
       .attachment-files
@@ -18,7 +17,7 @@
         ul
           = render  answer.links, resource: answer
 
-    - if current_user&.author?(answer)
+    - if can?(:destroy, answer)
         = link_to "Delete answer", 
                   answer_path(answer),
                   method: :delete,
@@ -26,9 +25,10 @@
                   remote: true,
                   data: { answer_id: answer.id }
 
+    - if can?(:update, answer)
         p = link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-    - if current_user&.author?(answer.question) && !answer.best?
+    - if can?(:best, answer) && !answer.best?
       = button_to 'Best',
                 best_answer_path(answer),
                 class: 'best-answer-link',
