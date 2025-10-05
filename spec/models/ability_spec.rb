@@ -53,6 +53,8 @@ RSpec.describe Ability do
     describe 'answer' do
       it { should be_able_to :create, Answer }
 
+      it { should be_able_to :answers, Question }
+
       it { should be_able_to :update, answer }
       it { should_not be_able_to :update, second_answer }
 
@@ -102,6 +104,11 @@ RSpec.describe Ability do
 
       it { should be_able_to :destroy, question.files.first }
       it { should_not be_able_to :destroy, second_question.files.first }
+    end
+
+    describe 'users' do
+      it { should be_able_to :me, User }
+      it { should be_able_to :index, User }
     end
   end
 end

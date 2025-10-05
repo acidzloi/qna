@@ -62,6 +62,7 @@ end
 
 config.include OmniauthHelpers
 config.include OmniauthEnvHelpers
+config.include ApiHelpers, type: :request
 
 Capybara.javascript_driver = :selenium_chrome_headless_custom
 

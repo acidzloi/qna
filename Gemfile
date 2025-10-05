@@ -34,6 +34,9 @@ gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-vkontakte"
 gem "cancancan"
+gem "doorkeeper"
+gem "active_model_serializers"
+gem "oj"
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
