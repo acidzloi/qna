@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :badges, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -42,5 +43,9 @@ class User < ApplicationRecord
   def self.create_with_password!(email)
     password = Devise.friendly_token[0, 20]
     User.create!(email: email, password: password, password_confirmation: password)
+  end
+
+  def subscribe?(obj)
+    subscriptions.exists?(question_id: obj.id)
   end
 end

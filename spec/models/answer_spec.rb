@@ -53,6 +53,15 @@ RSpec.describe Answer, type: :model do
     end
   end
 
+  describe 'send_new_answer_notify' do
+    let(:answer) { build(:answer, question: question, user: user) }
+
+    it 'calls NewAnswerNotificationJob' do
+      expect(NewAnswerNotificationJob).to receive(:perform_later).with(answer)
+      answer.save!
+    end
+  end
+
   it_behaves_like Voteble
   it_behaves_like Commenteble
 end

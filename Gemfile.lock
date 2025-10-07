@@ -1765,6 +1765,7 @@ GEM
       activesupport
     childprocess (5.1.0)
       logger (~> 1.5)
+    chronic (0.10.2)
     cocoon (1.2.15)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -1859,6 +1860,8 @@ GEM
     multi_json (1.17.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
+    mustermann (3.0.4)
+      ruby2_keywords (~> 0.0.1)
     net-http (0.6.0)
       uri
     net-imap (0.5.10)
@@ -1970,6 +1973,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    redis-client (0.26.1)
+      connection_pool
     regexp_parser (2.11.2)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -1996,6 +2001,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.5)
+    ruby2_keywords (0.0.5)
     rubyzip (3.1.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -2019,6 +2025,19 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
+    sidekiq (8.0.7)
+      connection_pool (>= 2.5.0)
+      json (>= 2.9.0)
+      logger (>= 1.6.2)
+      rack (>= 3.1.0)
+      redis-client (>= 0.23.2)
+    sinatra (4.1.1)
+      logger (>= 1.6.0)
+      mustermann (~> 3.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.1.1)
+      rack-session (>= 2.0.0, < 3)
+      tilt (~> 2.0)
     skim (0.11.0)
       coffee-script
       coffee-script-source (>= 1.2.0)
@@ -2068,6 +2087,8 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.3)
@@ -2111,6 +2132,8 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
   shoulda-matchers (~> 6.0)
+  sidekiq
+  sinatra
   skim
   slim-rails
   spring
@@ -2118,6 +2141,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
+  whenever
 
 RUBY VERSION
    ruby 3.2.4p170

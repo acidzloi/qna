@@ -4,6 +4,9 @@ p  = question.body
 .vote
   = render 'shared/vote', resource: question
 
+.subscription
+  = render 'subscriptions/subscription', resource: question
+
 - if question.badge.present?
   .badge
     p Badge:

@@ -37,6 +37,9 @@ gem "cancancan"
 gem "doorkeeper"
 gem "active_model_serializers"
 gem "oj"
+gem "sidekiq"
+gem "sinatra", require: false
+gem "whenever", require: false
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'

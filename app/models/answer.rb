@@ -16,6 +16,8 @@ class Answer < ApplicationRecord
   scope :sort_by_best, -> { order(best: :desc) }
   scope :best, -> { where(best: true) }
 
+  after_create :send_new_answer
+
   def best!
     transaction do
       question.answers.best.update!(best: false)
@@ -27,5 +29,9 @@ class Answer < ApplicationRecord
     files.map { |f| { id: f.id,
                       name: f.filename.to_s,
                       url: rails_blob_path(f, only_path: true) } }
+  end
+
+  def send_new_answer
+    NewAnswerNotificationJob.perform_later(self)
   end
 end

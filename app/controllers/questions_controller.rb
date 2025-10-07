@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :gon_question_id, only: [ :show, :create ]
+  before_action :subscription, only: :show
   after_action :publish_question, only: :create
 
   authorize_resource
@@ -57,7 +58,10 @@ class QuestionsController < ApplicationController
   helper_method :question
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes: [ :name, :url ], badge_attributes: [ :title, :image ])
+    params.require(:question).permit(:title, :body,
+                                     files: [],
+                                     links_attributes: [ :name, :url ],
+                                     badge_attributes: [ :title, :image ])
   end
 
   def publish_question
@@ -68,5 +72,9 @@ class QuestionsController < ApplicationController
 
   def gon_question_id
     gon.question_id = question.id
+  end
+
+  def subscription
+    @subscription ||= current_user&.subscriptions&.find_by(question: @question)
   end
 end
