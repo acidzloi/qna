@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     post :create_comment, on: :member
   end
 
-  resources :questions, concerns: %i[voteble commenteble], shallow: truedo
+  resources :questions, concerns: %i[voteble commenteble], shallow: true do
     resources :answers, concerns: %i[voteble commenteble], only: %i[ new create destroy update] do
       patch :best, on: :member
     end
