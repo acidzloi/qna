@@ -110,5 +110,10 @@ RSpec.describe Ability do
       it { should be_able_to :me, User }
       it { should be_able_to :index, User }
     end
+
+    describe 'subscription' do
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, Subscription }
+    end
   end
 end

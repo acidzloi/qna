@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:badges).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -102,4 +103,22 @@ RSpec.describe User, type: :model do
       expect { user.create_authorization(auth) }.to change(Authorization, :count).by(1)
     end
   end
+
+  describe '#subscribe?' do
+    let(:user) { create(:user) }
+    let(:second_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    context 'when user has subscription' do
+      it 'returns true' do
+        expect(user.subscribe?(question)).to eq true
+      end
+    end
+
+    context 'when user has not subscription' do
+      it 'returns false' do
+        expect(second_user.subscribe?(question)).to eq false
+      end
+    end
+  end  
 end
