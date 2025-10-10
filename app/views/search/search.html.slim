@@ -1,0 +1,9 @@
+.search_results
+  h3 Search results:
+  - if @search_results.empty?
+    p.result No matches found!
+  - else
+    - @search_results.each do |result|
+      p.result
+        = render partial: "search/#{result.class.name.downcase}", locals: { result: result }
+        

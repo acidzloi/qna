@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     post "/send_email" => "oauth_callbacks#send_email"
   end
 
+  get "/search", to: "search#search"
+
   concern :voteble do
     member do
       post :vote_up, :vote_down
