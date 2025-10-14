@@ -1,0 +1,7 @@
+b Comment from: #{ result.user.email }
+p= result.body
+- if result.commenteble_type.downcase == 'question'
+  i For question: #{ link_to result.commenteble.title, result.commenteble, target: '_blank' }
+- else
+  i For question: #{ link_to result.commenteble.question.title, result.commenteble.question, target: '_blank' }
+  
