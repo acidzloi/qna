@@ -43,9 +43,10 @@ gem "whenever", require: false
 gem "mysql2"
 gem "thinking-sphinx"
 gem "database_cleaner"
-gem 'faraday-retry'
-gem 'sprockets-rails'
-gem 'sassc-rails'
+gem "faraday-retry"
+gem "sprockets-rails"
+gem "sassc-rails"
+gem "unicorn"
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
