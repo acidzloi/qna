@@ -16,3 +16,5 @@ append :linked_files, "config/database.yml", 'config/master.key'
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "vendor/bundle", "storage"
 
 set :rvm_ruby_version, 'ruby-3.2.4'
+
+after 'deploy:publishing', 'unicorn:restart'
