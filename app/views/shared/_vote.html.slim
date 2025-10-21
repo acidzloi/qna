@@ -1,25 +1,26 @@
-.vote class="vote-#{resource.class}-#{resource.id}"
-  .vote-errors
-    
-  p Votes:
-  .total-votes
-      = "#{resource.total_votes}"
+- cache resource do
+  .vote class="vote-#{resource.class}-#{resource.id}"
+    .vote-errors
+      
+    p Votes:
+    .total-votes
+        = "#{resource.total_votes}"
 
-  .voting class = "#{'hidden' if current_user&.voted?(resource)}"
-    - if can?(:vote_up, resource)
-      = link_to '+', polymorphic_path(resource, action: :vote_up),
-                   method: :post,
-                   remote: true,
-                   data: { type: :json }
+    .voting class = "#{'hidden' if current_user&.voted?(resource)}"
+      - if can?(:vote_up, resource)
+        = link_to '+', polymorphic_path(resource, action: :vote_up),
+                    method: :post,
+                    remote: true,
+                    data: { type: :json }
 
-    - if can?(:vote_down, resource)
-      = link_to '-', polymorphic_path(resource, action: :vote_down),
-                   method: :post,
-                   remote: true,
-                   data: { type: :json }
-  .recall
-    = link_to 'recall', polymorphic_path(resource, action: :recall),
-                        class: "recall-link #{'hidden' unless can?(:recall, resource)}",
-                        method: :delete,
-                        remote: true, data: { type: :json }
+      - if can?(:vote_down, resource)
+        = link_to '-', polymorphic_path(resource, action: :vote_down),
+                    method: :post,
+                    remote: true,
+                    data: { type: :json }
+    .recall
+      = link_to 'recall', polymorphic_path(resource, action: :recall),
+                          class: "recall-link #{'hidden' unless can?(:recall, resource)}",
+                          method: :delete,
+                          remote: true, data: { type: :json }
                         

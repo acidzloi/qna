@@ -47,6 +47,7 @@ gem "faraday-retry"
 gem "sprockets-rails"
 gem "sassc-rails"
 gem "unicorn"
+gem "redis-rails"
 
 gem 'erb', '>= 2.2'
 gem 'tilt', '>= 2.2'
