@@ -9,6 +9,16 @@ set :branch, 'main'
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, "deployer"
 
+set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
+set :unicorn_config_path, "#{current_path}/config/unicorn/production.rb"
+set :unicorn_bin, -> { "#{fetch(:bundle_path)}/bin/unicorn" }
+
+set :sidekiq_role, :app
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+
+set :sidekiq_processes, 2
+set :sidekiq_options_per_process, ["--queue default", "--queue mailers"]
+
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
 

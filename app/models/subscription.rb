@@ -1,5 +1,5 @@
 class Subscription < ApplicationRecord
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
 
   validates :user, :question, presence: true

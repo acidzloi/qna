@@ -1,36 +1,37 @@
-h1 = question.title
-p  = question.body
+- cache question do
+  h1 = question.title
+  p  = question.body
 
-.vote
-  = render 'shared/vote', resource: question
+  .vote
+    = render 'shared/vote', resource: question
 
-.subscription
-  = render 'subscriptions/subscription', resource: question
+  .subscription
+    = render 'subscriptions/subscription', resource: question
 
-- if question.badge.present?
-  .badge
-    p Badge:
-    = image_tag question.badge.image, title: question.badge.title, size: "50x50"
-    p = question.badge.title
+  - if question.badge.present?
+    .badge
+      p Badge:
+      = image_tag question.badge.image, title: question.badge.title, size: "50x50"
+      p = question.badge.title
 
-- if question.files.attached?
-  .attachment-files
-    - question.files.each do |file|
-      p Files:
-      ul
-        = render 'attachments/attachment', resource: question
+  - if question.files.attached?
+    .attachment-files
+      - question.files.each do |file|
+        p Files:
+        ul
+          = render 'attachments/attachment', resource: question
 
-.question-errors
-  
-- if can?(:update, question)
-  p = link_to "Delete question", question_path(question), method: :delete
-  p = link_to 'Edit question', '#', class: 'edit-question-link'
-  p = render "form"
+  .question-errors
+    
+  - if can?(:update, question)
+    p = link_to "Delete question", question_path(question), method: :delete
+    p = link_to 'Edit question', '#', class: 'edit-question-link'
+    p = render "form"
 
-- if can?(:destroy, question)
-  p = link_to "Delete question", question_path(question), method: :delete
+  - if can?(:destroy, question)
+    p = link_to "Delete question", question_path(question), method: :delete
 
-.comments
-  p Comments:
-  p 
-    = render  'comments/comments', resource: question
+  .comments
+    p Comments:
+    p 
+      = render  'comments/comments', resource: question

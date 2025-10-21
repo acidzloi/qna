@@ -1,13 +1,14 @@
-- if current_user&.subscribe?(resource)
-  -if can? :destroy, Subscription
-    = link_to 'Unsubscribe', subscription_path(current_user&.subscriptions&.find_by(question: resource)),
-                             method: :delete,
-                             remote: true,
-                             class: 'unsubscribe-question-link'
-- else
-  -if can? :create, Subscription
-    = link_to 'Subscribe', question_subscriptions_path(resource),
-                           method: :post,
-                           remote: true,
-                           class: 'subscribe-question-link'
+- cache resource do
+  - if current_user&.subscribe?(resource)
+    -if can? :destroy, Subscription
+      = link_to 'Unsubscribe', subscription_path(current_user&.subscriptions&.find_by(question: resource)),
+                              method: :delete,
+                              remote: true,
+                              class: 'unsubscribe-question-link'
+  - else
+    -if can? :create, Subscription
+      = link_to 'Subscribe', question_subscriptions_path(resource),
+                            method: :post,
+                            remote: true,
+                            class: 'subscribe-question-link'
                            
